@@ -379,7 +379,6 @@ def buscar_pacientes_json(request):
                 Q(consultas__facturado=False) |
                 Q(consultas__facturas__isnull=True)
             )
-
         pacientes = pacientes.distinct()[:20]  # Limitar a 20 resultados
     data = []
     for p in pacientes:
