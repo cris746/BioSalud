@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const input = document.querySelector('input[name="q"]');
   const form = document.querySelector(".search-form");
   const tbody = document.querySelector(".tabla-pacientes tbody");
+  const chkPlanes = document.getElementById("filtro-planes");
+  const chkConsultas = document.getElementById("filtro-consultas");
 
   function renderPacientes(pacientes) {
     tbody.innerHTML = "";
@@ -45,7 +47,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function buscarPaciente(query) {
-    fetch(`/cajero/buscar_pacientes_json/?q=${encodeURIComponent(query)}`)
+    const params = new URLSearchParams();
+    params.append("q", query);
+    if (chkPlanes.checked) params.append("planes_pendientes", "1");
+    if (chkConsultas.checked) params.append("consultas_pendientes", "1");
+
+    history.replaceState(null, "", `?${params.toString()}`);
+
+    fetch(`/cajero/buscar_pacientes_json/?${params.toString()}`)
       .then(res => res.json())
       .then(data => {
         if (data.pacientes.length > 0) {
@@ -55,25 +64,28 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  input.addEventListener("input", function () {
+  function manejarBusqueda() {
     const query = input.value.trim();
-    if (query === "") {
+    if (query === "" && !chkPlanes.checked && !chkConsultas.checked) {
       mostrarHistorial();
     } else {
       buscarPaciente(query);
     }
-  });
+  }
+
+  input.addEventListener("input", manejarBusqueda);
+  chkPlanes.addEventListener("change", manejarBusqueda);
+  chkConsultas.addEventListener("change", manejarBusqueda);
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    const query = input.value.trim();
-    if (query !== "") {
-      buscarPaciente(query);
-    } else {
-      mostrarHistorial();
-    }
+    manejarBusqueda();
   });
 
-  // Mostrar historial al cargar
-  mostrarHistorial();
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("q")) input.value = urlParams.get("q");
+  chkPlanes.checked = urlParams.has("planes_pendientes");
+  chkConsultas.checked = urlParams.has("consultas_pendientes");
+
+  manejarBusqueda();
 });

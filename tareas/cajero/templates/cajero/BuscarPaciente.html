@@ -16,6 +16,8 @@
       <h2>Listado de Pacientes</h2>
       <form method="GET" class="search-form" onsubmit="return false;">
         <input type="text" name="q" id="campo-busqueda" placeholder="Buscar paciente...">
+        <label><input type="checkbox" id="filtro-planes"> Plan pendiente</label>
+        <label><input type="checkbox" id="filtro-consultas"> Consulta sin facturar</label>
         <button id="btnBuscar" type="submit"><i class="fas fa-search"></i></button>
       </form>
     </div>
