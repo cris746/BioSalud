@@ -18,6 +18,21 @@ body {
     overflow: hidden;
 }
 
+/* Botón toggle para móviles */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: var(--sidebar-bg);
+    color: white;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    z-index: 1001;
+    cursor: pointer;
+}
+
 body::before {
     content: '';
     position: fixed;
@@ -62,6 +77,31 @@ body::before {
 
 .logo-text {
     font-weight: bold;
+}
+
+/* ----- Collapse sidebar ----- */
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed .logo {
+    justify-content: center;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .menu-text {
+    display: none;
+}
+
+.sidebar.collapsed .menu li {
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.sidebar.collapsed + .main-content,
+.main-content.collapsed {
+    margin-left: 70px;
+    width: calc(100% - 70px);
 }
 
 .menu {
@@ -137,5 +177,28 @@ body::before {
 .welcome-img {
     width: 200px;
     margin-bottom: 20px;
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        left: -260px;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 80px 20px 20px;
+    }
 }
 
