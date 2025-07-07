@@ -350,31 +350,37 @@ def registrar_pago_cuota(request):
     
 # ✅ BUSCAR PACIENTES EN TIEMPO REAL (JSON)
 def buscar_pacientes_json(request):
-    query = request.GET.get('q', '')
-    filtro = request.GET.get('filtro')
-    filtrar_planes = filtro in ['planes', 'ambos']
-    filtrar_consultas = filtro in ['consultas', 'ambos']
-    pacientes = Pacientes.objects.all()
+    ids_param = request.GET.get('ids')
+    if ids_param:
+        ids = [int(i) for i in ids_param.split(',') if i.isdigit()]
+        pacientes = Pacientes.objects.filter(pacienteid__in=ids)
+    else:
+        query = request.GET.get('q', '')
+        filtro = request.GET.get('filtro')
+        filtrar_planes = filtro in ['planes', 'ambos']
+        filtrar_consultas = filtro in ['consultas', 'ambos']
 
-    if query:
-        pacientes = pacientes.filter(
-            Q(nombres__icontains=query) |
-            Q(apellidos__icontains=query) |
-            Q(numerodocumento__icontains=query)
-        )
+        pacientes = Pacientes.objects.all()
 
-    if filtrar_planes:
-        pacientes = pacientes.filter(
-            facturas__planespago__estado__isnull=False
-        ).exclude(facturas__planespago__estado='Pagado')
+        if query:
+            pacientes = pacientes.filter(
+                Q(nombres__icontains=query) |
+                Q(apellidos__icontains=query) |
+                Q(numerodocumento__icontains=query)
+            )
 
-    if filtrar_consultas:
-        pacientes = pacientes.filter(
-            Q(consultas__facturado=False) |
-            Q(consultas__facturas__isnull=True)
-        )
-    pacientes = pacientes.distinct()[:20]  # Limitar a 20 resultados
+        if filtrar_planes:
+            pacientes = pacientes.filter(
+                facturas__planespago__estado__isnull=False
+            ).exclude(facturas__planespago__estado='Pagado')
 
+        if filtrar_consultas:
+            pacientes = pacientes.filter(
+                Q(consultas__facturado=False) |
+                Q(consultas__facturas__isnull=True)
+            )
+
+        pacientes = pacientes.distinct()[:20]  # Limitar a 20 resultados
     data = []
     for p in pacientes:
         data.append({
