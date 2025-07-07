@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const menuItems = document.querySelectorAll('.menu li');
     const mainContent = document.querySelector('.main-content');
+    const sidebar = document.querySelector('.sidebar');
+    const toggle = document.querySelector('.menu-toggle');
 
     function obtenerSaludo() {
         const hora = new Date().getHours();
@@ -13,9 +15,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    }
+
     menuItems.forEach(item => {
         item.addEventListener('click', () => {
             const opcion = item.textContent.trim();
+
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
 
             if (opcion === "Cerrar sesión") {
                 const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
@@ -35,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = "/admin/servicios/";
             } else if (opcion === "Gestión de Habitaciones") {
                 window.location.href = "/admin/habitaciones/";
+            } else if (opcion === "Gestión de Altas") {
+                window.location.href = "/admin/tipos_alta/";
             } else if ( opcion === "Métodos de Pago") {
                 window.location.href = "/admin/metodos_pago/";
             } else if (opcion === "Control de Pacientes") {

@@ -5,12 +5,13 @@ from tareas.admin.Forms.form_especialidad import EspecialidadForm
 from tareas.admin.Forms.form_servicio import ServicioForm
 from tareas.admin.Forms.form_habitacion import HabitacionForm, TipoHabitacionForm
 from tareas.admin.Forms.form_metodo_pago import MetodoPagoForm
+from tareas.admin.Forms.form_tipo_alta import TipoAltaForm
 from tareas.admin.Forms.form_config import ConfiguracionForm
 from tareas.admin.config_utils import load_config, save_config
 from tareas.models import (
     Personal, Pacientes, PacienteAudit, Especialidades,
     Servicios, Facturas, Pagos, Consultas, Consultaservicios,
-    Habitaciones, Tiposhabitacion, Metodospago,
+    Habitaciones, Tiposhabitacion, Metodospago, Tiposalta,
     Fichaclinico, Hospitalizaciones
 )
 from django.contrib.auth.hashers import make_password
@@ -505,6 +506,62 @@ def eliminar_metodo_pago(request, metodo_id):
     metodo.delete()
     messages.success(request, 'Método de pago eliminado.')
     return redirect('listar_metodos_pago')
+
+
+# ----------------------------
+# GESTIÓN DE TIPOS DE ALTA
+# ----------------------------
+def listar_tipos_alta(request):
+    tipos = Tiposalta.objects.all()
+    return render(request, 'admin/listar_tipos_alta.html', {
+        'tipos': tipos,
+        'nombre': request.session.get('nombre'),
+        'rol': request.session.get('rol'),
+    })
+
+
+def registrar_tipoalta(request):
+    if request.method == 'POST':
+        form = TipoAltaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tipo de alta guardado.')
+            return redirect('listar_tipos_alta')
+        else:
+            messages.error(request, 'Revisa los campos del formulario.')
+    else:
+        form = TipoAltaForm()
+    return render(request, 'admin/registrar_tipoalta.html', {
+        'form': form,
+        'nombre': request.session.get('nombre'),
+        'rol': request.session.get('rol'),
+    })
+
+
+def editar_tipoalta(request, alta_id):
+    tipo = Tiposalta.objects.get(pk=alta_id)
+    if request.method == 'POST':
+        form = TipoAltaForm(request.POST, instance=tipo)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tipo de alta actualizado.')
+            return redirect('listar_tipos_alta')
+        else:
+            messages.error(request, 'Revisa los campos del formulario.')
+    else:
+        form = TipoAltaForm(instance=tipo)
+    return render(request, 'admin/registrar_tipoalta.html', {
+        'form': form,
+        'nombre': request.session.get('nombre'),
+        'rol': request.session.get('rol'),
+    })
+
+
+def eliminar_tipoalta(request, alta_id):
+    tipo = Tiposalta.objects.get(pk=alta_id)
+    tipo.delete()
+    messages.success(request, 'Tipo de alta eliminado.')
+    return redirect('listar_tipos_alta')
 
 
 # ----------------------------
