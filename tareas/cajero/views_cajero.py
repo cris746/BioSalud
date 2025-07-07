@@ -364,11 +364,15 @@ def buscar_pacientes_json(request):
         )
 
     if filtrar_planes:
-        pacientes = pacientes.filter(planespago__estado__isnull=False).exclude(planespago__estado='Pagado')
+        pacientes = pacientes.filter(
+            facturas__planespago__estado__isnull=False
+        ).exclude(facturas__planespago__estado='Pagado')
 
     if filtrar_consultas:
-        pacientes = pacientes.filter(consultas__facturado=False)
-
+        pacientes = pacientes.filter(
+            Q(consultas__facturado=False) |
+            Q(consultas__facturas__isnull=True)
+        )
     pacientes = pacientes.distinct()[:20]  # Limitar a 20 resultados
 
     data = []

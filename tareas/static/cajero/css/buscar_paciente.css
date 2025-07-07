@@ -94,11 +94,13 @@ body {
 .tabla-pacientes {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
 }
 
 .tabla-pacientes th,
 .tabla-pacientes td {
-  padding: 12px;
+  padding: 12px 15px;
   border-bottom: 1px solid #ddd;
   text-align: center;
 }
@@ -106,6 +108,14 @@ body {
 .tabla-pacientes th {
   background-color: #0046A4; /* Azul oscuro */
   color: white;
+}
+
+.tabla-pacientes tbody tr:nth-child(even) {
+  background-color: #f6f9ff;
+}
+
+.tabla-pacientes tbody tr:hover {
+  background-color: #e6fff1;
 }
 
 .btn-ver {
@@ -118,6 +128,8 @@ body {
   align-items: center;
   gap: 6px;
   font-weight: 600;
+  cursor: pointer;
+
   transition: background-color 0.3s;
 }
 
