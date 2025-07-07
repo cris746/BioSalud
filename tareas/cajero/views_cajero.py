@@ -354,7 +354,6 @@ def buscar_pacientes_json(request):
     filtro = request.GET.get('filtro')
     filtrar_planes = filtro in ['planes', 'ambos']
     filtrar_consultas = filtro in ['consultas', 'ambos']
-
     pacientes = Pacientes.objects.all()
 
     if query:
@@ -374,7 +373,6 @@ def buscar_pacientes_json(request):
             Q(consultas__facturado=False) |
             Q(consultas__facturas__isnull=True)
         )
-
     pacientes = pacientes.distinct()[:20]  # Limitar a 20 resultados
 
     data = []
