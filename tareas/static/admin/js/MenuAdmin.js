@@ -35,6 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = "/admin/servicios/";
             } else if (opcion === "Gestión de Habitaciones") {
                 window.location.href = "/admin/habitaciones/";
+            } else if (opcion === "Gestión de Altas") {
+                window.location.href = "/admin/tipos_alta/";
             } else if ( opcion === "Métodos de Pago") {
                 window.location.href = "/admin/metodos_pago/";
             } else if (opcion === "Control de Pacientes") {

@@ -14,6 +14,7 @@ from .views_admin import (
     listar_habitaciones, registrar_habitacion, editar_habitacion, eliminar_habitacion,
     listar_tipos_habitacion, registrar_tipohabitacion, editar_tipohabitacion, eliminar_tipohabitacion,
     listar_metodos_pago, registrar_metodo_pago, editar_metodo_pago, eliminar_metodo_pago,
+    listar_tipos_alta, registrar_tipoalta, editar_tipoalta, eliminar_tipoalta,
     inicio_admin
 )
 
@@ -55,6 +56,10 @@ urlpatterns = [
     path('metodos_pago/nuevo/', registrar_metodo_pago, name='registrar_metodo_pago'),
     path('metodos_pago/<int:metodo_id>/editar/', editar_metodo_pago, name='editar_metodo_pago'),
     path('metodos_pago/<int:metodo_id>/eliminar/', eliminar_metodo_pago, name='eliminar_metodo_pago'),
+    path('tipos_alta/', listar_tipos_alta, name='listar_tipos_alta'),
+    path('tipos_alta/nueva/', registrar_tipoalta, name='registrar_tipoalta'),
+    path('tipos_alta/<int:alta_id>/editar/', editar_tipoalta, name='editar_tipoalta'),
+    path('tipos_alta/<int:alta_id>/eliminar/', eliminar_tipoalta, name='eliminar_tipoalta'),
     path('consultas/', listar_consultas, name='listar_consultas'),
     path('consultas/<int:consulta_id>/', detalle_consulta, name='detalle_consulta'),
     path('reportes/', reportes_estadisticas, name='reportes_estadisticas'),
