@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+(() => {
     const menuItems = document.querySelectorAll('.menu li');
     const mainContent = document.querySelector('.main-content');
     const sidebar = document.querySelector('.sidebar');
@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (btnContraer) {
         btnContraer.addEventListener('click', toggleSidebar);
     }
+
     menuItems.forEach(item => {
         item.addEventListener('click', () => {
             const opcion = item.textContent.trim();
@@ -54,6 +55,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 toggleSidebar();
                 return;
             }
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+
+            if (item.id === 'contraer') {
+                toggleSidebar();
+                return;
+            }
+
             if (sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active');
             }
@@ -97,4 +107,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-});
+})();
