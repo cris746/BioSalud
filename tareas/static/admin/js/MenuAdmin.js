@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sidebar.classList.toggle('active');
         });
     }
-
     if (logo) {
         logo.addEventListener('click', () => {
             if (window.innerWidth <= 768) {
@@ -32,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
     menuItems.forEach(item => {
         item.addEventListener('click', () => {
             const opcion = item.textContent.trim();
