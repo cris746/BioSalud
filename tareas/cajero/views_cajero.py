@@ -381,7 +381,6 @@ def buscar_pacientes_json(request):
             )
 
         pacientes = pacientes.distinct()[:20]  # Limitar a 20 resultados
-
     data = []
     for p in pacientes:
         data.append({
