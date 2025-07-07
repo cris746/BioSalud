@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const input = document.querySelector('input[name="q"]');
   const form = document.querySelector(".search-form");
   const tbody = document.querySelector(".tabla-pacientes tbody");
-  const chkPlanes = document.getElementById("filtro-planes");
-  const chkConsultas = document.getElementById("filtro-consultas");
+  const filtroSelect = document.getElementById("filtro-pendientes");
+
 
   function renderPacientes(pacientes) {
     tbody.innerHTML = "";
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <td>${p.ci}</td>
           <td>${p.fechanacimiento}</td>
           <td>${p.telefono}</td>
-          <td><a href="${p.url}" class="btn-ver">Ver</a></td>
+          <td><a href="${p.url}" class="btn-ver"><i class="fas fa-eye"></i> Ver</a></td>
         </tr>
       `;
       tbody.insertAdjacentHTML("beforeend", row);
@@ -49,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function buscarPaciente(query) {
     const params = new URLSearchParams();
     params.append("q", query);
-    if (chkPlanes.checked) params.append("planes_pendientes", "1");
-    if (chkConsultas.checked) params.append("consultas_pendientes", "1");
+    const filtro = filtroSelect.value;
+    if (filtro) params.append("filtro", filtro);
 
     history.replaceState(null, "", `?${params.toString()}`);
 
@@ -66,7 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function manejarBusqueda() {
     const query = input.value.trim();
-    if (query === "" && !chkPlanes.checked && !chkConsultas.checked) {
+    if (query === "" && filtroSelect.value === "") {
+
       mostrarHistorial();
     } else {
       buscarPaciente(query);
@@ -74,8 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   input.addEventListener("input", manejarBusqueda);
-  chkPlanes.addEventListener("change", manejarBusqueda);
-  chkConsultas.addEventListener("change", manejarBusqueda);
+  filtroSelect.addEventListener("change", manejarBusqueda);
+
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -84,8 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("q")) input.value = urlParams.get("q");
-  chkPlanes.checked = urlParams.has("planes_pendientes");
-  chkConsultas.checked = urlParams.has("consultas_pendientes");
+  if (urlParams.has("filtro")) filtroSelect.value = urlParams.get("filtro");
 
   manejarBusqueda();
 });

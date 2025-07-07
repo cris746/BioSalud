@@ -351,9 +351,9 @@ def registrar_pago_cuota(request):
 # ✅ BUSCAR PACIENTES EN TIEMPO REAL (JSON)
 def buscar_pacientes_json(request):
     query = request.GET.get('q', '')
-    filtrar_planes = 'planes_pendientes' in request.GET
-    filtrar_consultas = 'consultas_pendientes' in request.GET
-
+    filtro = request.GET.get('filtro')
+    filtrar_planes = filtro in ['planes', 'ambos']
+    filtrar_consultas = filtro in ['consultas', 'ambos']
     pacientes = Pacientes.objects.all()
 
     if query:
