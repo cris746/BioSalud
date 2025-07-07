@@ -18,6 +18,21 @@ body {
     overflow: hidden;
 }
 
+/* Botón toggle para móviles */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: var(--sidebar-bg);
+    color: white;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    z-index: 1001;
+    cursor: pointer;
+}
+
 body::before {
     content: '';
     position: fixed;
@@ -137,5 +152,28 @@ body::before {
 .welcome-img {
     width: 200px;
     margin-bottom: 20px;
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        left: -260px;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 80px 20px 20px;
+    }
 }
 
