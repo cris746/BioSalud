@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial del Paciente</title>
+    <link rel="stylesheet" href="{% static 'enfermeria/css/VerHistorial.css' %}">
+    <script src="{% static 'enfermeria/js/Historial.js' %}" defer></script>
+</head>
+<body>
+    <div class="contenedor-historial">
+
+        <!-- 🔙 Botón Regresar al historial del paciente -->
+        <div class="boton-regresar">
+            <a href="{% url 'historial_enfermeria' ficha.pacienteid.pacienteid %}">⬅ Regresar</a>
+        </div>
+
+        <!-- 📌 Cabecera del paciente -->
+        <div class="cabecera-paciente">
+            <h2>👤 Datos del Paciente</h2>
+            <p><strong>Nombre Completo:</strong> {{ ficha.pacienteid.nombres|default:'' }} {{ ficha.pacienteid.apellidos|default:'' }}</p>
+            <p><strong>Número de Documento:</strong> {{ ficha.pacienteid.tipodocumento|default:'' }} {{ ficha.pacienteid.numerodocumento|default:'' }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {% if ficha.pacienteid.fechanacimiento %}{{ ficha.pacienteid.fechanacimiento|date:"d/m/Y" }}{% else %}No registrada{% endif %}</p>
+            <p><strong>Edad:</strong> {{ ficha.pacienteid.edad|default:'No registrada' }} años</p>
+            <p><strong>Género:</strong> {{ ficha.pacienteid.genero|default:'No registrado' }}</p>
+            <p><strong>Teléfono:</strong> {{ ficha.pacienteid.telefono|default:'No registrado' }}</p>
+            <p><strong>Dirección:</strong> {{ ficha.pacienteid.direccion|default:'No registrada' }}</p>
+            <p><strong>Email:</strong> {{ ficha.pacienteid.email|default:'No registrado' }}</p>
+            <p><strong>Grupo Sanguíneo:</strong> {{ ficha.pacienteid.gruposanguineo|default:'No registrado' }}</p>
+            <p><strong>Alergias:</strong> {{ ficha.pacienteid.alergias|default:'No registradas' }}</p>
+            <p><strong>Observaciones:</strong> {{ ficha.pacienteid.observaciones|default:'Ninguna' }}</p>
+            <p><strong>Fecha de Registro:</strong> {% if ficha.pacienteid.fecharegistro %}{{ ficha.pacienteid.fecharegistro|date:"d/m/Y H:i" }}{% else %}No registrada{% endif %}</p>
+        </div>
+
+        <!-- 📄 Ficha Clínica -->
+        <div class="ficha-clinica">
+            <h2>📄 Ficha Clínica</h2>
+            <p><strong>Tipo de Atención:</strong> 
+                {% if ficha.tipoatencion == 'Emergencia' %}Emergencia
+                {% elif ficha.tipoatencion == 'Consulta Externa' %}Consulta Externa
+                {% else %}No especificado{% endif %}
+            </p>
+            <p><strong>Fecha de Apertura:</strong> {% if ficha.fechaapertura %}{{ ficha.fechaapertura|date:"d/m/Y H:i" }}{% else %}No registrada{% endif %}</p>
+            <p><strong>Motivo de Consulta:</strong> {{ ficha.motivoconsulta|default:'No registrado' }}</p>
+            <p><strong>Diagnóstico Inicial:</strong> {{ ficha.diagnosticoinicial|default:'No registrado' }}</p>
+            <p><strong>Antecedentes Personales:</strong> {{ ficha.antecedentespersonales|default:'No registrados' }}</p>
+            <p><strong>Antecedentes Familiares:</strong> {{ ficha.antecedentesfamiliares|default:'No registrados' }}</p>
+
+            <!-- Mostrar Signos Vitales -->
+            {% if ficha.signosvitales %}
+                <p><strong>Signos Vitales:</strong></p>
+                <div style="margin-left: 20px;">
+                    <p><strong>TA (Presión):</strong> {{ ficha.signosvitales.ta|default:'No registrada' }}</p>
+                    <p><strong>FC (Frecuencia Cardíaca):</strong> {{ ficha.signosvitales.fc|default:'No registrada' }}</p>
+                    <p><strong>FR (Frecuencia Respiratoria):</strong> {{ ficha.signosvitales.fr|default:'No registrada' }}</p>
+                    <p><strong>Temp (Temperatura):</strong> {{ ficha.signosvitales.temp|default:'No registrada' }}{% if ficha.signosvitales.temp %} °C{% endif %}</p>
+                    <p><strong>SpO₂:</strong> {{ ficha.signosvitales.spo2|default:'No registrada' }}{% if ficha.signosvitales.spo2 %} %{% endif %}</p>
+                </div>
+            {% else %}
+                <p><strong>Signos Vitales:</strong> No registrados</p>
+            {% endif %}
+
+            <p><strong>Tratamiento Sugerido:</strong> {{ ficha.tratamientosugerido|default:'No registrado' }}</p>
+            <p><strong>Observaciones:</strong> {{ ficha.observaciones|default:'Ninguna' }}</p>
+            <p><strong>Estado:</strong> {{ ficha.estado|default:'Activa' }}</p>
+
+            <!-- Mostrar información del personal responsable -->
+            {% if enfermera_responsable %}
+                <p><strong>Enfermera Responsable:</strong> {{ enfermera_responsable.nombres }} {{ enfermera_responsable.apellidos }} (Enfermería)</p>
+            {% else %}
+                <p><strong>Enfermera Responsable:</strong> No asignada</p>
+            {% endif %}
+
+            {% if doctor_responsable %}
+                <p><strong>Doctor Responsable:</strong> {{ doctor_responsable.nombres }} {{ doctor_responsable.apellidos }} (Doctor)</p>
+            {% else %}
+                <p><strong>Doctor Responsable:</strong> No asignado</p>
+            {% endif %}
+        </div>
+
+        <!-- 📜 Historial Detallado -->
+        <div class="historial-atenciones">
+            <h2>📚 Historial de Atenciones</h2>
+
+            <!-- Consultas -->
+            {% if consultas %}
+                <h3>🩺 Consultas Médicas</h3>
+                {% for consulta in consultas %}
+                    <div class="consulta-item">
+                        <p><strong>Fecha:</strong> {% if consulta.fechaconsulta %}{{ consulta.fechaconsulta|date:"d/m/Y H:i" }}{% else %}No registrada{% endif %}</p>
+                        <p><strong>Motivo:</strong> {{ consulta.motivocita|default:'No especificado' }}</p>
+                        <p><strong>Diagnóstico:</strong> {{ consulta.diagnostico|default:'No registrado' }}</p>
+                        <p><strong>Tratamiento:</strong> {{ consulta.tratamiento|default:'No registrado' }}</p>
+                        <p><strong>Observaciones:</strong> {{ consulta.observaciones|default:'Ninguna' }}</p>
+                        <p><strong>Costo:</strong> {% if consulta.costo %}Bs. {{ consulta.costo }}{% else %}No registrado{% endif %}</p>
+                        <p><strong>Estado:</strong> {% if consulta.estado %}Activa{% else %}Inactiva{% endif %}</p>
+                        
+                        <!-- Mostrar doctor responsable -->
+                        {% if consulta.personalid and consulta.personalid.rol == 'Doctor' %}
+                            <p><strong>Doctor Responsable:</strong> {{ consulta.personalid.nombres }} {{ consulta.personalid.apellidos }}</p>
+                        {% else %}
+                            <p><strong>Doctor Responsable:</strong> No asignado</p>
+                        {% endif %}
+                        
+                        <p><strong>Fecha de Registro:</strong> {% if consulta.fecharegistro %}{{ consulta.fecharegistro|date:"d/m/Y H:i" }}{% else %}No registrada{% endif %}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No se encontraron consultas.</p>
+            {% endif %}
+
+            <!-- Hospitalizaciones -->
+            {% if hospitalizaciones %}
+                <h3>🏥 Hospitalizaciones</h3>
+                {% for hosp in hospitalizaciones %}
+                    <div class="hospitalizacion-item">
+                        <p><strong>Fecha de Ingreso:</strong> {% if hosp.fechaingreso %}{{ hosp.fechaingreso|date:"d/m/Y H:i" }}{% else %}No registrada{% endif %}</p>
+                        <p><strong>Fecha de Alta:</strong> {% if hosp.fechaalta %}{{ hosp.fechaalta|date:"d/m/Y H:i" }}{% else %}Aún hospitalizado{% endif %}</p>
+                        <p><strong>Diagnóstico:</strong> {{ hosp.diagnostico|default:'No registrado' }}</p>
+                        <p><strong>Tratamiento Aplicado:</strong> {{ hosp.tratamientoaplicado|default:'No registrado' }}</p>
+                        <p><strong>Motivo Hospitalización:</strong> {{ hosp.motivohospitalizacion|default:'No especificado' }}</p>
+                        <p><strong>Observaciones:</strong> {{ hosp.observaciones|default:'Ninguna' }}</p>
+
+                        {% if hosp.personalid %}
+                            <p><strong>{% if hosp.personalid.rol == 'Enfermería' %}Enfermería{% elif hosp.personalid.rol == 'Doctor' %}Doctor{% else %}Personal{% endif %} Responsable:</strong> 
+                                {{ hosp.personalid.nombres|default:'' }} {{ hosp.personalid.apellidos|default:'' }}
+                                {% if hosp.personalid.rol %} ({{ hosp.personalid.rol }}){% endif %}
+                            </p>
+                        {% else %}
+                            <p><strong>Personal Responsable:</strong> No asignado</p>
+                        {% endif %}
+                        
+                        <p><strong>Estado:</strong> {% if hosp.estado %}Activa{% else %}Inactiva{% endif %}</p>
+                        <p><strong>Fecha de Registro:</strong> {% if hosp.fecharegistro %}{{ hosp.fecharegistro|date:"d/m/Y H:i" }}{% else %}No registrada{% endif %}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No se encontraron hospitalizaciones.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

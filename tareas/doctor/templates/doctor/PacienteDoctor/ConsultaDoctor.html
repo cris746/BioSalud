@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Consulta Médica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'doctor/css/ConsultaDoctor.css' %}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-image: url("{% static 'img/fondo_clinica.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+        /* Estilos para el campo de facturación */
+        .facturacion-group {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            margin: 20px 0;
+        }
+        
+        .facturacion-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .facturacion-options {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+        
+        .radio-option:hover {
+            border-color: #007bff;
+            background-color: #f8f9ff;
+        }
+        
+        .radio-option input[type="radio"] {
+            margin: 0;
+            width: auto;
+        }
+        
+        .radio-option.selected {
+            border-color: #007bff;
+            background-color: #e7f3ff;
+        }
+        
+        .radio-option.no-facturado.selected {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        
+        .radio-option.facturado.selected {
+            border-color: #28a745;
+            background-color: #d4edda;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .status-no-facturado {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-facturado {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Nueva Consulta para {{ paciente.nombres }} {{ paciente.apellidos }}</h1>
+
+    {% if ficha_reciente %}
+    <div class="ficha-reciente">
+        <h2>📝 Ficha Clínica Registrada</h2>
+        <p><strong>Paciente:</strong> {{ ficha_reciente.pacienteid.nombres }} {{ ficha_reciente.pacienteid.apellidos }}</p>
+        <p><strong>Fecha de Apertura:</strong> {{ ficha_reciente.fechaapertura|date:"d/m/Y H:i" }}</p>
+        <p><strong>Motivo de Consulta:</strong> {{ ficha_reciente.motivoconsulta }}</p>
+        <p><strong>Diagnóstico Inicial:</strong> {{ ficha_reciente.diagnosticoinicial }}</p>
+        <p><strong>Antecedentes Personales:</strong> {{ ficha_reciente.antecedentespersonales }}</p>
+        <p><strong>Antecedentes Familiares:</strong> {{ ficha_reciente.antecedentesfamiliares }}</p>
+        <p><strong>Signos Vitales:</strong></p>
+        <ul>
+            {% for key, value in ficha_reciente.signosvitales.items %}
+                <li><strong>{{ key|capfirst }}:</strong> {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Tratamiento Sugerido:</strong> {{ ficha_reciente.tratamientosugerido }}</p>
+        <p><strong>Observaciones:</strong> {{ ficha_reciente.observaciones }}</p>
+        <p><strong>Tipo de Atención:</strong> {{ ficha_reciente.tipoatencion }}</p>
+    </div>
+    {% else %}
+    <p style="color: #b91c1c;"><em>No hay ficha clínica reciente registrada para este paciente.</em></p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="motivocita">Motivo de la Consulta:</label>
+        <input type="text" name="motivocita" id="motivocita" required>
+
+        <label for="diagnostico">Diagnóstico:</label>
+        <textarea name="diagnostico" id="diagnostico" rows="4"></textarea>
+
+        <label for="tratamiento">Tratamiento:</label>
+        <textarea name="tratamiento" id="tratamiento" rows="4"></textarea>
+
+        <label for="observaciones">Observaciones:</label>
+        <textarea name="observaciones" id="observaciones" rows="3"></textarea>
+
+        <label for="costo">Costo de la Consulta ($):</label>
+        <input type="number" step="0.01" name="costo" id="costo">
+
+        <label for="estado">¿Consulta Activa?</label>
+        <select name="estado" id="estado">
+            <option value="True">Activa</option>
+            <option value="False">Cerrada</option>
+        </select>
+
+        <!-- NUEVO CAMPO DE FACTURACIÓN -->
+        <div class="facturacion-group">
+            <label>
+                <i class="fas fa-file-invoice-dollar"></i> Estado de Facturación:
+                <span id="facturacion-status" class="status-indicator status-no-facturado">❌ No Facturado</span>
+            </label>
+            
+            <div class="facturacion-options">
+                <div class="radio-option no-facturado selected" data-value="false">
+                    <input type="radio" name="facturado" value="false" id="no_facturado" checked>
+                    <label for="no_facturado">
+                        <i class="fas fa-times-circle" style="color: #dc3545;"></i>
+                        No Facturado
+                    </label>
+                </div>
+                
+                <div class="radio-option facturado" data-value="true">
+                    <input type="radio" name="facturado" value="true" id="facturado">
+                    <label for="facturado">
+                        <i class="fas fa-check-circle" style="color: #28a745;"></i>
+                        Facturado
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkbox para servicios -->
+        <div class="checkbox-servicio">
+            <label>
+                <input type="checkbox" id="requiere_servicio" name="requiere_servicio">
+                ¿REQUIERE OTRO SERVICIO DENTRO DE LA CLÍNICA?
+            </label>
+        </div>
+
+        <!-- Campos de servicios -->
+        <div id="servicio_box" style="display: none; margin-top: 15px;">
+            <label for="servicioid">Seleccione un Servicio:</label>
+            <select name="servicioid" id="servicioid">
+                <option value="">-- Seleccione --</option>
+                {% for servicio in servicios %}
+                    <option value="{{ servicio.servicioid }}">{{ servicio.nombre }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" id="cantidad" min="1">
+
+            <label for="observaciones_servicio">Observaciones del Servicio:</label>
+            <textarea name="observaciones_servicio" id="observaciones_servicio" rows="2"></textarea>
+        </div>
+
+        <!-- Checkbox para hospitalización -->
+        <div class="checkbox-hospitalizacion" style="margin-top: 20px;">
+            <label>
+                <input type="checkbox" id="requiere_hospitalizacion" name="requiere_hospitalizacion">
+                ¿HOSPITALIZAR AL PACIENTE?
+            </label>
+        </div>
+
+        <!-- Campos de hospitalización (solo lo esencial) -->
+        <div id="hospitalizacion_box" style="display: none; margin-top: 15px;">
+            <label for="tipo_habitacion">🛏️ Tipo de Habitación:</label>
+            <select name="tipo_habitacion" id="tipo_habitacion">
+                <option value="">-- Seleccione tipo --</option>
+                {% for tipo in tipos_habitacion %}
+                    <option value="{{ tipo.tipohabitacionid }}">{{ tipo.nombre }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="button" id="btnBuscarHabitaciones" style="margin-top: 10px; background-color: green; color: white; padding: 5px 10px; border-radius: 5px;">
+                <i class="fas fa-search"></i> Buscar habitaciones disponibles
+            </button>
+
+            <div id="resultado_habitaciones" style="margin-top: 10px;">
+                <label>🏨 Habitaciones Disponibles:</label>
+                <div id="habitaciones_lista" style="color: #888;">
+                    Las habitaciones disponibles aparecerán aquí tras presionar "Buscar".
+                </div>
+            </div>
+
+            <label for="motivohospitalizacion">Motivo de Hospitalización:</label>
+            <input type="text" name="motivohospitalizacion" id="motivohospitalizacion">
+
+            <label for="diagnostico_h">Diagnóstico para Hospitalización:</label>
+            <textarea name="diagnostico_h" id="diagnostico_h" rows="3"></textarea>
+        </div>
+
+        <div class="btn-group">
+            <button type="submit">Guardar Consulta</button>
+            <a href="{% url 'perfil_paciente_doctor' paciente.pacienteid %}" class="cancelar">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script src="{% static 'doctor/js/ConsultaDoctor.js' %}"></script>
+
+<script>
+// Script para manejar el estado de facturación
+document.addEventListener('DOMContentLoaded', function() {
+    const radioOptions = document.querySelectorAll('.radio-option');
+    const statusIndicator = document.getElementById('facturacion-status');
+    
+    // Función para actualizar el estado visual
+    function updateFacturacionStatus(isFacturado) {
+        // Actualizar indicador de estado
+        if (isFacturado) {
+            statusIndicator.className = 'status-indicator status-facturado';
+            statusIndicator.innerHTML = '✅ Facturado';
+        } else {
+            statusIndicator.className = 'status-indicator status-no-facturado';
+            statusIndicator.innerHTML = '❌ No Facturado';
+        }
+        
+        // Actualizar estilos de las opciones
+        radioOptions.forEach(option => {
+            option.classList.remove('selected');
+            if (option.dataset.value === (isFacturado ? 'true' : 'false')) {
+                option.classList.add('selected');
+            }
+        });
+    }
+    
+    // Eventos para los radio buttons
+    document.querySelectorAll('input[name="facturado"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            updateFacturacionStatus(this.value === 'true');
+        });
+    });
+    
+    // Eventos para hacer clic en las opciones visuales
+    radioOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const radioButton = this.querySelector('input[type="radio"]');
+            radioButton.checked = true;
+            updateFacturacionStatus(radioButton.value === 'true');
+        });
+    });
+    
+    // Inicializar el estado por defecto
+    updateFacturacionStatus(false);
+});
+</script>
+
+</body>
+</html>

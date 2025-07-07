@@ -1,0 +1,127 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel del Doctor</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap">
+    <link rel="stylesheet" href="{% static 'doctor/css/MenuDoctor.css' %}">
+    <style>
+        body {
+            background-image: url("{% static 'img/fondo_clinica.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: url("{% static 'img/fondo_clinica.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(3px);
+            z-index: -1;
+        }
+
+        .panel {
+            background: rgba(0,0,0,0.2);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Panel izquierdo con nombre y acciones -->
+    <div class="sidebar">
+        <h2>Bienvenido/a</h2>
+        <div class="nombre">Dr: {{ nombre_completo }}</div> 
+        
+        <div class="botones-contenedor">
+            <div class="menu-botones">
+                <a href="{% url 'ver_pacientes' %}" class="btn btn-pacientes">👥 Pacientes</a>
+                <a href="{% url 'ver_hospitalizaciones' %}" class="boton">🏥 Hospitalización</a>
+                <a href="{% url 'perfil_doctor' %}" class="boton">👤 Perfil</a>
+                <a href="{% url 'logout' %}" class="boton cerrar-sesion">🚪 Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel derecho: Ficha Clínica con formato de tabla -->
+    <div class="main-panel">
+        <div class="fichas-contenedor">
+            <h1>📝 Fichas Clínicas</h1>
+
+            <table class="tabla-fichas">
+                <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Motivo</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if fichas %}
+                        {% for ficha in fichas %}
+                            <tr class="{% if ficha.tipoatencion == 'Emergencia' %}ficha-emergencia{% endif %}">
+                                <td><strong>{{ ficha.pacienteid.nombres }} {{ ficha.pacienteid.apellidos }}</strong></td>
+                                <td>{{ ficha.motivoconsulta }}</td>
+                                <td>{{ ficha.tipoatencion }}</td>
+                                <td>
+                                    {% if ficha.estado == 'Atendido' %}
+                                        ✅ Atendido
+                                    {% else %}
+                                        ⏳ Pendiente
+                                    {% endif %}
+                                </td>
+                                <td class="ficha-acciones">
+                                    <a href="{% url 'perfil_paciente_doctor' ficha.pacienteid.pacienteid %}" class="consulta">Iniciar</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5">No hay fichas clínicas recientes.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{% static 'doctor/js/MenuDoctor.js' %}"></script>
+</body>
+</html>

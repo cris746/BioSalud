@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel del Cajero</title>
+    <link rel="stylesheet" href="{% static 'cajero/css/panel_cajero.css' %}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'img/fondo_clinica.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>📋 BioSalud - Caja</h2>
+        <a href="{% url 'buscar_paciente' %}" class="btn">👤 Buscar Paciente</a>
+        <a href="{% url 'logout' %}" class="btn">↩ Cerrar Sesión</a>
+    </div>
+
+    <div class="main-content">
+        <div class="glass-panel">
+            <h1>Panel del Cajero</h1>
+            <p>Desde aquí puedes acceder a las funciones disponibles como búsqueda de paciente o cierre de sesión.</p>
+        </div>
+    </div>
+</body>
+</html>

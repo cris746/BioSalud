@@ -1,0 +1,164 @@
+/* Fondo de la página */
+body {
+    background: url("{% static 'img/fondo_clinica.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+/* Contenedor principal */
+.historial-container {
+    background-color: rgba(0, 0, 0, 0.7);  /* Fondo oscuro transparente */
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid #d1d5db;
+}
+
+/* Encabezado con título y botón regresar */
+.header-container {
+    display: flex;
+    justify-content: center; /* Centra todo en el eje horizontal */
+    align-items: center;     /* Alinea los elementos verticalmente */
+    margin-bottom: 30px;
+}
+
+.boton-volver {
+    position: absolute;
+    left: 30px;  /* Mantén el botón pegado al lado izquierdo */
+}
+
+.boton-volver a {
+    display: flex;
+    align-items: center;
+    background-color: #38bdf8;
+    border-radius: 8px;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    gap: 8px;
+}
+
+.boton-volver a:hover {
+    background-color: #0284c7;
+}
+
+.boton-volver img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Título principal */
+h1 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 auto; /* Centra el título */
+}
+
+/* Datos del paciente */
+.datos-paciente {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.datos-paciente p {
+    margin: 8px 0;
+}
+
+.datos-paciente strong {
+    color: #38bdf8;
+}
+
+/* Formulario de filtro por fechas */
+.filtro-fechas {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+.filtro-fechas label {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.filtro-fechas input {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.filtro-fechas button {
+    background-color: #38bdf8;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.filtro-fechas button:hover {
+    background-color: #0284c7;
+}
+
+/* Estilo de la tabla de fichas */
+.tabla-fichas {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tabla-fichas th, .tabla-fichas td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-fichas th {
+    background-color: #0284c7;
+    color: white;
+    font-weight: bold;
+}
+
+.tabla-fichas td {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.tabla-fichas tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tabla-fichas .btn-ver {
+    display: inline-block;
+    background-color: #38bdf8;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.tabla-fichas .btn-ver:hover {
+    background-color: #0284c7;
+}
+
+.tabla-fichas td[colspan="4"] {
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.2rem;
+}

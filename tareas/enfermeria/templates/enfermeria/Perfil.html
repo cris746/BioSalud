@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil del Personal</title>
+    <link rel="stylesheet" href="{% static 'enfermeria/css/Perfil.css' %}">
+    <style>
+        body {
+            background: url("{% static 'img/fondo_clinica.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="perfil-container">
+        <div class="titulo-perfil">
+            <img src="{% static 'img/Personal.gif' %}" alt="Ícono Personal">
+            <h1>Perfil del Personal</h1>
+        </div>
+
+        {% if personal %}
+        <div class="datos-personal">
+            <p><strong>Nombre Completo:</strong> {{ personal.nombres }} {{ personal.apellidos }}</p>
+            <p><strong>Documento:</strong> {{ personal.numerodocumento }} ({{ personal.tipodocumento }})</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ personal.fechanacimiento|date:"d/m/Y" }}</p>
+            <p><strong>Género:</strong> {{ personal.genero }}</p>
+            <p><strong>Dirección:</strong> {{ personal.direccion }}</p>
+            <p><strong>Teléfono:</strong> {{ personal.telefono }}</p>
+            <p><strong>Email:</strong> {{ personal.email }}</p>
+            <p><strong>Fecha de Ingreso:</strong> {{ personal.fechaingreso|date:"d/m/Y" }}</p>
+            <p><strong>Rol:</strong> {{ personal.rol }}</p>
+            {% if personal.especialidad %}
+            <p><strong>Especialidad:</strong> {{ personal.especialidad.nombre }}</p>
+            {% endif %}
+        </div>
+        {% else %}
+        <p>No se pudo obtener la información del usuario.</p>
+        {% endif %}
+
+        <div class="boton-volver">
+            <a href="{% url 'menu_enfermeria' %}">← Volver al menú</a>
+        </div>
+    </div>
+</body>
+</html>

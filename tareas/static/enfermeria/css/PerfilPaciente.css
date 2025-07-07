@@ -1,0 +1,190 @@
+/* Contenedor general del perfil */
+.perfil-container {
+    background-color: rgba(0, 0, 0, 0.7);  /* Fondo oscuro transparente */
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 35px 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Sección superior: botón regresar y título juntos */
+.boton-volver {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0;
+    gap: 30px;
+}
+
+.boton-volver .btn-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    background-color: #4F9DFF;  /* Azul */
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.boton-volver .btn-volver:hover {
+    background-color: #3B7ED6;  /* Azul más oscuro */
+}
+
+.boton-volver .btn-volver::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.boton-volver .btn-volver:hover::before {
+    left: 100%;
+}
+
+.boton-volver img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Posicionamos el título para que aparezca junto al botón */
+.boton-volver::after {
+    content: "👤 Perfil del Paciente";
+    font-size: 32px;
+    color: #ffffff;  /* Blanco */
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Ocultamos el título original del header */
+.perfil-header h1 {
+    display: none;
+}
+
+/* Encabezado solo con botones */
+.perfil-header {
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+/* Botones superiores alineados a la izquierda */
+.botones-superiores {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.botones-superiores .btn {
+    background-color: #4F9DFF;  /* Azul */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(248, 245, 245, 0.86);
+}
+
+.botones-superiores .btn:hover {
+    background-color: #3B7ED6;  /* Azul más oscuro */
+    transform: scale(1.05);
+}
+
+/* Información del paciente */
+.info-paciente {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.info-paciente div {
+    background-color: #797085;
+    padding: 12px 16px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(240, 235, 235, 0.958);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.info-paciente div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px #fff(247, 246, 246, 0.1);
+}
+
+.info-paciente strong {
+    color: #6b21a8;
+}
+
+/* Campos que ocupan toda la fila (como Email) */
+.info-paciente div:nth-child(9),
+.info-paciente div:nth-child(13),
+.info-paciente div:nth-child(14),
+.info-paciente div:nth-child(15),
+.info-paciente div:nth-child(16) {
+    grid-column: span 2;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .perfil-container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .boton-volver {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .boton-volver::after {
+        font-size: 24px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .botones-superiores {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .botones-superiores .btn {
+        width: 100%;
+        max-width: 200px;
+        text-align: center;
+    }
+
+    .info-paciente {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .info-paciente div:nth-child(9),
+    .info-paciente div:nth-child(13),
+    .info-paciente div:nth-child(14),
+    .info-paciente div:nth-child(15),
+    .info-paciente div:nth-child(16) {
+        grid-column: span 1;
+    }
+}

@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Buscar Paciente</title>
+  <link rel="stylesheet" href="{% static 'cajero/css/buscar_paciente.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="contenido-container">
+    <a href="{% url 'panel_cajero' %}" class="btn-regresar">⟵ Regresar</a>
+
+    <div class="barra-superior">
+      <h2>Listado de Pacientes</h2>
+      <form method="GET" class="search-form" onsubmit="return false;">
+        <input type="text" name="q" id="campo-busqueda" placeholder="Buscar paciente...">
+        <button id="btnBuscar" type="submit"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+
+    <!-- Historial reciente (se oculta automáticamente cuando no hay búsquedas) -->
+    <div id="historial-busquedas" class="historial-container" style="display: none;">
+      <p class="titulo-historial">Búsquedas recientes:</p>
+      <ul id="lista-historial"></ul>
+    </div>
+
+    <table class="tabla-pacientes">
+      <thead>
+        <tr>
+          <!-- <th>ID</th> Eliminado -->
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>CI</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="resultado-pacientes">
+        <tr>
+          <td colspan="6" style="text-align: center;">Escribe para buscar pacientes...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="{% static 'cajero/js/buscar_paciente.js' %}"></script>
+
+</body>
+</html>

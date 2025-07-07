@@ -1,0 +1,109 @@
+/* Contenedor exterior para centrar vertical y horizontalmente */
+.contenedor-principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Contenedor principal con fondo negro transparente */
+.container {
+    max-width: 1000px;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.65); /* Negro translúcido */
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+/* Título principal */
+.container h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #ffffff; /* Blanco para contraste */
+    font-weight: 700;
+}
+
+/* Tabla */
+.tabla-hospitalizados {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* fondo tenue para la tabla */
+    color: #ffffff; /* texto blanco para mejor visibilidad */
+}
+
+.tabla-hospitalizados thead {
+    background-color: rgba(0, 121, 107, 0.9); /* Verde oscuro translúcido */
+    color: #fff;
+}
+
+.tabla-hospitalizados th, 
+.tabla-hospitalizados td {
+    text-align: center;
+    padding: 12px 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.tabla-hospitalizados tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.tabla-hospitalizados tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Botones de acción */
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    margin: 3px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+button a {
+    text-decoration: none;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Botón "Ver Servicio" */
+.btn-ver-servicio {
+    background-color: #0288d1;
+}
+
+.btn-ver-servicio:hover {
+    background-color: #0277bd;
+}
+
+/* Botón "Dar Alta" (por si se activa en el futuro) */
+.btn-alta {
+    background-color: #43a047;
+}
+
+.btn-alta:hover {
+    background-color: #388e3c;
+}
+
+/* Texto cuando no hay hospitalizados */
+.sin-hospitalizados {
+    text-align: center;
+    font-size: 18px;
+    color: #ffb74d;
+    margin-top: 30px;
+    font-weight: 500;
+}
+
+/* Íconos */
+i.fas {
+    font-size: 16px;
+}

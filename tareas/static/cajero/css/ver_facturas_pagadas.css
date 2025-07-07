@@ -1,0 +1,124 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 40px;
+  background-image: url("/static/img/fondo_clinica.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Contenedor principal */
+.contenedor-facturas {
+  max-width: 900px;
+  width: 100%;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Título */
+.titulo {
+  margin-top: 0;
+  text-align: center;
+  color: #14b87c;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/* Encabezado con botón */
+.encabezado-botones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Botón regresar */
+.btn-volver {
+  background-color: #14b87c;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(20, 184, 124, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.btn-volver:hover {
+  background-color: #0e8a5f;
+}
+
+/* Tabla de facturas */
+.tabla-facturas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.tabla-facturas th,
+.tabla-facturas td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.tabla-facturas th {
+  background-color: #111827;
+  color: white;
+  font-weight: bold;
+}
+
+.tabla-facturas tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Botón anular */
+.btn-anular {
+  color: red;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid red;
+  background-color: #ffecec;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-anular:hover {
+  background-color: red;
+  color: white;
+}
+
+/* Botón lupa de detalle */
+.btn-ver-detalle {
+  background-color: #00c8e0;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver-detalle:hover {
+  background-color: #009bbb;
+}
+
+/* Texto cuando no hay facturas */
+.sin-facturas {
+  text-align: center;
+  font-weight: bold;
+  color: #888;
+  margin-top: 30px;
+}

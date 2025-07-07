@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil del Paciente</title>
+  <link rel="stylesheet" href="{% static 'cajero/css/perfil_paciente.css' %}">
+  <script src="{% static 'cajero/js/perfil_paciente.js' %}" defer></script>
+</head>
+<body>
+  <div class="contenedor-perfil">
+    <h2 class="titulo-perfil">Perfil del Paciente</h2>
+
+    {% if messages %}
+      <div class="alertas">
+        {% for message in messages %}
+          <div class="alerta alerta-warning">
+            ⚠️ {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="item-perfil"><strong>ID:</strong> {{ paciente.pacienteid }}</div>
+    <div class="item-perfil"><strong>Nombre:</strong> {{ paciente.nombres }}</div>
+    <div class="item-perfil"><strong>Apellido:</strong> {{ paciente.apellidos }}</div>
+    <div class="item-perfil"><strong>CI:</strong> {{ paciente.numerodocumento }}</div>
+    <div class="item-perfil"><strong>Fecha de Nacimiento:</strong> {{ paciente.fechanacimiento|date:"d \\d\\e F \\d\\e Y" }}</div>
+    <div class="item-perfil"><strong>Teléfono:</strong> {{ paciente.telefono }}</div>
+    <div class="item-perfil"><strong>Contacto Emergencia:</strong> {{ paciente.nombre_contacto_emergencia }}</div>
+    <div class="item-perfil"><strong>Tel. Emergencia:</strong> {{ paciente.telefono_contacto_emergencia }}</div>
+    <div class="item-perfil"><strong>Parentesco:</strong> {{ paciente.parentesco_contacto_emergencia }}</div>
+    <div class="item-perfil"><strong>Dirección:</strong> {{ paciente.direccion }}</div>
+    <div class="item-perfil"><strong>Email:</strong> {{ paciente.email }}</div>
+    <div class="item-perfil"><strong>Enfermedades Base:</strong> {{ paciente.enfermedades_base }}</div>
+    <div class="item-perfil"><strong>Idioma Principal:</strong> {{ paciente.idioma_principal }}</div>
+
+    <div class="botones-acciones">
+      <a href="{% url 'buscar_paciente' %}" class="btn-volver">⟵ Volver al Listado</a>
+
+      <button class="btn-factura" onclick="verificarYGenerarFactura('{{ paciente.pacienteid }}')">
+        📄 Generar Factura
+      </button>
+
+      <a href="{% url 'ver_pagos_paciente' paciente.pacienteid %}" class="btn-factura">
+        🧾 Ver Plan de Pagos
+      </a>
+
+      <a href="{% url 'ver_facturas_pagadas' paciente.pacienteid %}" class="btn-factura">
+        📋 Ver Facturas Pagadas
+      </a>
+    </div>
+  </div>
+
+  <!-- Toast dinámico (por JS) -->
+  <div id="toast" class="toast"></div>
+</body>
+</html>

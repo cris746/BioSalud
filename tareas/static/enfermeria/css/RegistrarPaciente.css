@@ -1,0 +1,213 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url("{% static 'img/fondo_clinica.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;  /* Texto blanco */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* Contenedor principal */
+.registro-container {
+    background-color: rgba(0, 0, 0, 0.7);  /* Contenedor negro transparente */
+    color: #fff;  /* Letras blancas */
+    margin-top: 50px;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);  /* Sombra más tenue */
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Título principal */
+h1 {
+    text-align: center;
+    color: #4F9DFF;  /* Color azul */
+    margin-bottom: 30px;
+}
+
+/* Estilo de formularios */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #d1d5db;  /* Gris claro */
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+select,
+textarea {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.3);  /* Fondo semi-transparente para los campos */
+    color: #fff;  /* Texto blanco dentro de los campos */
+}
+
+/* Estilo para los campos select (desplegables) */
+select {
+    background-color: rgba(0, 0, 0, 0.5);  /* Fondo oscuro para los desplegables */
+    color: #fff;  /* Texto blanco */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+select option {
+    background-color: #1f2937;  /* Fondo oscuro para las opciones */
+    color: #fff;  /* Texto blanco para las opciones */
+}
+
+select:focus {
+    outline: none;
+    border-color: #4F9DFF;  /* Azul al enfocarse */
+    box-shadow: 0 0 5px rgba(79, 157, 255, 0.3);  /* Sombra azul */
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #4F9DFF;  /* Azul al enfocarse */
+    box-shadow: 0 0 5px rgba(79, 157, 255, 0.3);  /* Sombra azul */
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Botones de acción */
+.botones-acciones {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.botones-acciones button {
+    background-color: #4F9DFF;  /* Azul */
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.botones-acciones button:hover {
+    background-color: #3B7ED6;  /* Azul más oscuro */
+    transform: scale(1.05);
+}
+
+.botones-acciones img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Botón Regresar */
+.boton-regresar {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.boton-regresar a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: #e11d48;  /* Rojo */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.boton-regresar a:hover {
+    background-color: #be123c;  /* Rojo más oscuro */
+}
+
+.boton-regresar img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Mensajes del sistema de Django */
+.messages-container {
+    margin-bottom: 20px;  /* Espacio entre los mensajes y el formulario */
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 20px 0;
+}
+
+.messages li {
+    padding: 20px 30px;  /* Mayor espacio para los mensajes */
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;  /* Tamaño de letra grande */
+}
+
+/* Estilos para los mensajes de error */
+.messages .error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* Estilos para los mensajes de éxito */
+.messages .success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+/* Mensajes de éxito/error por AJAX */
+.mensaje-ajax {
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;  /* Tamaño de letra grande */
+}
+
+.mensaje-ajax.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+.mensaje-ajax.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
