@@ -41,7 +41,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function mostrarHistorial() {
     const historial = JSON.parse(localStorage.getItem("historialPacientes")) || [];
-    renderPacientes(historial);
+    if (historial.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align: center;">No hay búsquedas recientes.</td></tr>`;
+      return;
+    }
+
+    const ids = historial.map(p => p.id);
+    fetch(`/cajero/buscar_pacientes_json/?ids=${ids.join(',')}`)
+      .then(res => res.json())
+      .then(data => {
+        const validIds = data.pacientes.map(p => p.id);
+        const validPacientes = historial.filter(p => validIds.includes(p.id));
+        localStorage.setItem("historialPacientes", JSON.stringify(validPacientes));
+        renderPacientes(validPacientes);
+      })
+      .catch(() => {
+        renderPacientes(historial);
+      });
   }
 
   function buscarPaciente(query) {
