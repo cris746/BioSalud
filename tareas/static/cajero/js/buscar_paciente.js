@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const tbody = document.querySelector(".tabla-pacientes tbody");
   const filtroSelect = document.getElementById("filtro-pendientes");
 
+
   function renderPacientes(pacientes) {
     tbody.innerHTML = "";
 
@@ -66,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function manejarBusqueda() {
     const query = input.value.trim();
     if (query === "" && filtroSelect.value === "") {
+
       mostrarHistorial();
     } else {
       buscarPaciente(query);
@@ -74,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   input.addEventListener("input", manejarBusqueda);
   filtroSelect.addEventListener("change", manejarBusqueda);
+
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();

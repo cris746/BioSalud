@@ -4,7 +4,7 @@ Django settings for BioSaludCRUD project.
 
 from pathlib import Path
 import os
-
+   
 # BASE_DIR apunta a la raíz del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
