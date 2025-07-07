@@ -79,6 +79,31 @@ body::before {
     font-weight: bold;
 }
 
+/* ----- Collapse sidebar ----- */
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed .logo {
+    justify-content: center;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .menu-text {
+    display: none;
+}
+
+.sidebar.collapsed .menu li {
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.sidebar.collapsed + .main-content,
+.main-content.collapsed {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
 .menu {
     list-style: none;
     padding: 0;

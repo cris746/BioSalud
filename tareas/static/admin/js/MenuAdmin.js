@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const mainContent = document.querySelector('.main-content');
     const sidebar = document.querySelector('.sidebar');
     const toggle = document.querySelector('.menu-toggle');
+    const logo = document.getElementById('logo-toggle');
 
     function obtenerSaludo() {
         const hora = new Date().getHours();
@@ -20,7 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
             sidebar.classList.toggle('active');
         });
     }
-
+    if (logo) {
+        logo.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('collapsed');
+            }
+        });
+    }
     menuItems.forEach(item => {
         item.addEventListener('click', () => {
             const opcion = item.textContent.trim();
