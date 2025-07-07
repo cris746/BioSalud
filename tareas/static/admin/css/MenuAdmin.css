@@ -121,6 +121,10 @@ body::before {
     position: relative;
 }
 
+#contraer {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .menu li i {
     margin-right: 12px;
     font-size: 1.1rem;
