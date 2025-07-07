@@ -1,6 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
+(() => {
     const menuItems = document.querySelectorAll('.menu li');
     const mainContent = document.querySelector('.main-content');
+    const sidebar = document.querySelector('.sidebar');
+    const toggle = document.querySelector('.menu-toggle');
+    const logo = document.getElementById('logo-toggle');
+    const btnContraer = document.getElementById('contraer');
+    const contraerIcon = btnContraer ? btnContraer.querySelector('i') : null;
 
     function obtenerSaludo() {
         const hora = new Date().getHours();
@@ -13,9 +18,50 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    }
+
+    function toggleSidebar() {
+        if (window.innerWidth <= 768) {
+            sidebar.classList.toggle('active');
+        } else {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('collapsed');
+            if (contraerIcon) {
+                if (sidebar.classList.contains('collapsed')) {
+                    contraerIcon.classList.remove('bi-chevron-left');
+                    contraerIcon.classList.add('bi-chevron-right');
+                } else {
+                    contraerIcon.classList.remove('bi-chevron-right');
+                    contraerIcon.classList.add('bi-chevron-left');
+                }
+            }
+        }
+    }
+
+    if (logo) {
+        logo.addEventListener('click', toggleSidebar);
+    }
+
+    if (btnContraer) {
+        btnContraer.addEventListener('click', toggleSidebar);
+    }
+
     menuItems.forEach(item => {
         item.addEventListener('click', () => {
             const opcion = item.textContent.trim();
+
+            if (item.id === 'contraer') {
+                toggleSidebar();
+                return;
+            }
+
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
 
             if (opcion === "Cerrar sesión") {
                 const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
@@ -35,6 +81,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = "/admin/servicios/";
             } else if (opcion === "Gestión de Habitaciones") {
                 window.location.href = "/admin/habitaciones/";
+            } else if (opcion === "Gestión de Altas") {
+                window.location.href = "/admin/tipos_alta/";
             } else if ( opcion === "Métodos de Pago") {
                 window.location.href = "/admin/metodos_pago/";
             } else if (opcion === "Control de Pacientes") {
@@ -54,4 +102,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-});
+})();

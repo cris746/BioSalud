@@ -13,26 +13,29 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <div class="menu-toggle"><i class="bi bi-list"></i></div>
     <div class="sidebar">
-        <div class="logo">
+        <div class="logo" id="logo-toggle">
             <i class="bi bi-heart-pulse-fill"></i>
             <span class="logo-text">{{ config.nombre_clinica }}</span>
         </div>
         <ul class="menu">
-            <li id="inicio"><i class="bi bi-house-fill"></i> Inicio</li>
-            <li><i class="bi bi-people-fill"></i> Gestión de Personal</li>
-            <li><i class="bi bi-journal-medical"></i> Gestión de Especialidades</li>
-            <li><i class="bi bi-clipboard2-pulse-fill"></i> Servicios Médicos</li>
-            <li><i class="bi bi-door-closed-fill"></i> Gestión de Habitaciones</li>
-            <li><i class="bi bi-credit-card-2-back-fill"></i> Métodos de Pago</li>
-            <li><i class="bi bi-person-lines-fill"></i> Control de Pacientes</li>
-            <li><i class="bi bi-hospital"></i> Consultas y Emergencias</li>
-            <li><i class="bi bi-cash-coin"></i> Gestión Financiera</li>
-            <li><i class="bi bi-bar-chart-fill"></i> Reportes y Estadísticas</li>
-            <li><i class="bi bi-key-fill"></i> Control de Accesos</li>
-            <li><i class="bi bi-gear-fill"></i> Configuraciones Generales</li>
+            <li id="contraer"><i class="bi bi-chevron-left"></i> <span class="menu-text">Contraer</span></li>
+            <li id="inicio"><i class="bi bi-house-fill"></i> <span class="menu-text">Inicio</span></li>
+            <li><i class="bi bi-people-fill"></i> <span class="menu-text">Gestión de Personal</span></li>
+            <li><i class="bi bi-journal-medical"></i> <span class="menu-text">Gestión de Especialidades</span></li>
+            <li><i class="bi bi-clipboard2-pulse-fill"></i> <span class="menu-text">Servicios Médicos</span></li>
+            <li><i class="bi bi-door-closed-fill"></i> <span class="menu-text">Gestión de Habitaciones</span></li>
+            <li><i class="bi bi-person-check-fill"></i> <span class="menu-text">Gestión de Altas</span></li>
+            <li><i class="bi bi-credit-card-2-back-fill"></i> <span class="menu-text">Métodos de Pago</span></li>
+            <li><i class="bi bi-person-lines-fill"></i> <span class="menu-text">Control de Pacientes</span></li>
+            <li><i class="bi bi-hospital"></i> <span class="menu-text">Consultas y Emergencias</span></li>
+            <li><i class="bi bi-cash-coin"></i> <span class="menu-text">Gestión Financiera</span></li>
+            <li><i class="bi bi-bar-chart-fill"></i> <span class="menu-text">Reportes y Estadísticas</span></li>
+            <li><i class="bi bi-key-fill"></i> <span class="menu-text">Control de Accesos</span></li>
+            <li><i class="bi bi-gear-fill"></i> <span class="menu-text">Configuraciones Generales</span></li>
             <li id="cerrar-sesion">
-                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                <i class="bi bi-box-arrow-right"></i> <span class="menu-text">Cerrar sesión</span>
             </li>
         </ul>
     </div>
