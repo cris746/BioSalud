@@ -6,7 +6,6 @@
     const logo = document.getElementById('logo-toggle');
     const btnContraer = document.getElementById('contraer');
     const contraerIcon = btnContraer ? btnContraer.querySelector('i') : null;
-
     function obtenerSaludo() {
         const hora = new Date().getHours();
         if (hora >= 6 && hora < 12) {
@@ -23,7 +22,6 @@
             sidebar.classList.toggle('active');
         });
     }
-
     function toggleSidebar() {
         if (window.innerWidth <= 768) {
             sidebar.classList.toggle('active');
@@ -53,6 +51,13 @@
     menuItems.forEach(item => {
         item.addEventListener('click', () => {
             const opcion = item.textContent.trim();
+            if (item.id === 'contraer') {
+                toggleSidebar();
+                return;
+            }
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
 
             if (item.id === 'contraer') {
                 toggleSidebar();
