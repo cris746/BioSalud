@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector(".search-form");
   const tbody = document.querySelector(".tabla-pacientes tbody");
   const filtroSelect = document.getElementById("filtro-pendientes");
-
   function renderPacientes(pacientes) {
     tbody.innerHTML = "";
 
